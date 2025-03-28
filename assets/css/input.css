@@ -1,0 +1,76 @@
+/* body.wp-admin .acf_rich_editor * {
+    font-family: sans-serif;
+}
+
+body.wp-admin .acf_rich_editor .sun-editor .se-svg,
+body.wp-admin .acf_rich_editor .sun-editor button > svg {
+    height: 14px;
+    width: 14px;
+} */
+
+.trumbowyg-modal-box,
+.trumbowyg-modal-button {
+    font-family: sans-serif;
+}
+
+body.wp-admin .trumbowyg-box {
+    min-height: 140px !important;
+}
+
+body.wp-admin .trumbowyg-editor * {
+    font-family: sans-serif !important;
+    line-height: 1.4 !important;
+}
+
+body.wp-admin .trumbowyg-editor p {
+    margin: 15px 0 !important;
+}
+
+body.wp-admin .trumbowyg-editor ul,
+body.wp-admin .trumbowyg-editor ol {
+    margin: 15px 0 !important;
+}
+
+body.wp-admin .trumbowyg-editor li {
+    margin: 10px 0 !important;
+}
+
+body.wp-admin .trumbowyg-editor p,
+body.wp-admin .trumbowyg-editor li {
+    font-size: 14px !important;
+}
+
+body.wp-admin .trumbowyg-editor h1,
+body.wp-admin .trumbowyg-editor h2,
+body.wp-admin .trumbowyg-editor h3,
+body.wp-admin .trumbowyg-editor h4,
+body.wp-admin .trumbowyg-editor h5,
+body.wp-admin .trumbowyg-editor h6 {
+    font-weight: bold !important;
+    margin: 15px 0 !important;
+    padding: 0 !important;
+}
+
+body.wp-admin .trumbowyg-editor h1 {
+    font-size: 26px !important;
+}
+
+body.wp-admin .trumbowyg-editor h2 {
+    font-size: 24px !important;
+}
+
+body.wp-admin .trumbowyg-editor h3 {
+    font-size: 22px !important;
+}
+
+body.wp-admin .trumbowyg-editor h4 {
+    font-size: 20px !important;
+}
+
+body.wp-admin .trumbowyg-editor h5 {
+    font-size: 18px !important;
+}
+
+body.wp-admin .trumbowyg-editor h6 {
+    font-size: 16px !important;
+}
