@@ -30,11 +30,11 @@ class acf_field_rich_editor extends acf_field {
   }
 
   function get_toolbars() {
-    $toolbars  = [
+    $toolbars = [
       'full' => [
         'label' => 'Full',
         'buttons' => [
-          ['formats'],
+          ['formats', 'styleselect'],
           ['strong', 'em', 'strikethrough'],
           ['wplink'],
           ['superscript', 'subscript'],
@@ -68,6 +68,25 @@ class acf_field_rich_editor extends acf_field {
     return $toolbars;
   }
 
+  function get_styles() {
+    $styles = [
+      'button_red' => [
+        'label' => 'Button Red',
+        'classname' => 'button_red',
+        'targets' => [ 'A' ],
+      ],
+      'headline_1' => [
+        'label' => 'Headline 1',
+        'classname' => 'headline_1',
+        'targets' => [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ],
+      ],
+    ];
+
+    $styles = apply_filters( 'acf/fields/rich_editor/styles', $styles );
+
+    return $styles;
+  }
+
   function render_field_presentation_settings( $field ) {
     $toolbars = $this->get_toolbars();
     $choices  = [];
@@ -96,8 +115,9 @@ class acf_field_rich_editor extends acf_field {
     ]);
   }
 
-  function render_field( $field  ){
+  function render_field( $field  ) {
     $toolbars = $this->get_toolbars();
+    $styles = $this->get_styles();
 
     $html = '';
 
@@ -110,10 +130,14 @@ class acf_field_rich_editor extends acf_field {
       }
     }
 
+    $options = [];
+
     if ( ! empty( $toolbars[ $field['toolbar'] ]['buttons'] ) ) {
-      $options = [
-        'btns' => $toolbars[ $field['toolbar'] ]['buttons'],
-      ];
+      $options['btns'] = $toolbars[ $field['toolbar'] ]['buttons'];
+    }
+
+    if ( ! empty( $styles ) ) {
+      $options['styleOptions'] = $styles;
     }
 
     $value = $field['value'];
@@ -133,10 +157,10 @@ class acf_field_rich_editor extends acf_field {
     $url = $this->settings['url'];
     $version = $this->settings['version'];
 
-    wp_register_script( 'acf-rich-lib', 'https://cdn.jsdelivr.net/npm/trumbowyg@2.31.0/dist/trumbowyg.min.js', [ 'acf-input' ], $version );
+    wp_register_script( 'acf-rich-lib', $url . 'assets/trumbowyg/trumbowyg.min.js', [ 'acf-input' ], $version );
     wp_enqueue_script( 'acf-rich-lib' );
 
-    wp_register_style( 'acf-rich-lib', 'https://cdn.jsdelivr.net/npm/trumbowyg@2.31.0/dist/ui/trumbowyg.min.css', [ 'acf-input' ], $version );
+    wp_register_style( 'acf-rich-lib', $url . 'assets/trumbowyg/ui/trumbowyg.min.css', [ 'acf-input' ], $version );
     wp_enqueue_style( 'acf-rich-lib' );
 
     wp_register_script( 'acf-rich-editor', $url . 'assets/js/input.js', [ 'acf-rich-lib' ], $version );

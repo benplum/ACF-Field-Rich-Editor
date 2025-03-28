@@ -74,3 +74,14 @@ body.wp-admin .trumbowyg-editor h5 {
 body.wp-admin .trumbowyg-editor h6 {
     font-size: 16px !important;
 }
+
+
+body.wp-admin .trumbowyg-editor .button_red {
+    padding: 10px !important;
+    background: red !important;
+    color: white !important;
+}
+
+body.wp-admin .trumbowyg-editor .headline_1 {
+    font-size: 60px !important;
+}
