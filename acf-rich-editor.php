@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Rich Editor
 Plugin URI: https://github.com/benplum/ACF-Field-Rich-Editor
 Description: Rich Editor field for Advanced Custom Fields Pro.
-Version: 0.2.0
+Version: 0.3.0
 Author: Ben Plum
 Author URI: https://benplum.com
 License: GPLv2 or later
@@ -33,7 +33,7 @@ class ACF_Plugin_Rich_Editor_Field {
 
   function __construct() {
     $this->settings = [
-      'version' => '0.2.0',
+      'version' => '0.3.0',
       'url' => plugin_dir_url( __FILE__ ),
       'path' => plugin_dir_path( __FILE__ )
     ];

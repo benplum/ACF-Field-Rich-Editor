@@ -137,7 +137,7 @@
       url = $a.attr('href');
 
       if (!activeTrumbowyg.o.minimalLinks) {
-      target = $a.attr('target') || linkDefaultTarget;
+        target = $a.attr('target') || linkDefaultTarget;
       }
 
       let range = activeTrumbowyg.doc.createRange();
@@ -183,43 +183,43 @@
     },
     plugins: {
       wplink: {
-      init: function (trumbowyg) {
-        trumbowyg.o.plugins.wplink = $.extend(true, {},
-        defaultOptions,
-        trumbowyg.o.plugins.wplink || {}
-        );
+        init: function (trumbowyg) {
+          trumbowyg.o.plugins.wplink = $.extend(true, {},
+            defaultOptions,
+            trumbowyg.o.plugins.wplink || {}
+          );
 
-        trumbowyg.addBtnDef('wpcreatelink', {
-        title: 'Link',
-        ico: 'create-link',
-        hasIcon: true,
-        fn: function() {
-          onCreateLink.call(trumbowyg, arguments);
-        }
-        });
+          trumbowyg.addBtnDef('wpcreatelink', {
+            title: 'Link',
+            ico: 'create-link',
+            hasIcon: true,
+            fn: function() {
+              onCreateLink.call(trumbowyg, arguments);
+            }
+          });
 
-        trumbowyg.addBtnDef('wpremovelink', {
-        title: 'Unlink',
-        ico: 'unlink',
-        hasIcon: true,
-        fn: function() {
-          onRemoveLink.call(trumbowyg, arguments);
-        }
-        });
+          trumbowyg.addBtnDef('wpremovelink', {
+            title: 'Unlink',
+            ico: 'unlink',
+            hasIcon: true,
+            fn: function() {
+              onRemoveLink.call(trumbowyg, arguments);
+            }
+          });
 
-        trumbowyg.addBtnDef('wplink', {
-        title: 'WP Link',
-        ico: 'link',
-        hasIcon: true,
-        dropdown: ['wpcreatelink', 'wpremovelink']
-        });
-      },
-      tagHandler: function (el, trumbowyg) {
-        console.log(el.tagName);
-        return (el.tagName == 'A') ? ['wplink', 'wpcreatelink', 'wpremovelink'] : [];
-      },
-      destroy: function (trumbowyg) {
-      },
+          trumbowyg.addBtnDef('wplink', {
+            title: 'WP Link',
+            ico: 'link',
+            hasIcon: true,
+            dropdown: ['wpcreatelink', 'wpremovelink']
+          });
+        },
+        tagHandler: function (el, trumbowyg) {
+          console.log(el.tagName);
+          return (el.tagName == 'A') ? ['wplink', 'wpcreatelink', 'wpremovelink'] : [];
+        },
+        destroy: function (trumbowyg) {
+        },
       }
     }
   });
@@ -231,21 +231,7 @@
   'use strict';
 
   let defaultOptions = {};
-
   let styleOptions = {};
-  // let styleOptions = {
-  //   button_red: {
-  //   label: 'Button Red',
-  //   classname: 'button_red',
-  //   targets: [ 'A' ]
-  //   },
-  //   headline_1: {
-  //   label: 'Headline 1',
-  //   classname: 'headline_1',
-  //   targets: [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ]
-  //   }
-  // };
-
   let activeTrumbowyg;
 
   function onSelectStyle(style) {
@@ -271,15 +257,10 @@
     if (node) {
       let $el = $(node);
 
-      // activeTrumbowyg.range.deleteContents();
-      // activeTrumbowyg.range.insertNode(link[0]);
-      // activeTrumbowyg.syncCode();
-      // activeTrumbowyg.$c.trigger('tbwchange');
-
       if ($el.hasClass(style)) {
-      $el.removeClass(style);
+        $el.removeClass(style);
       } else {
-      $el.addClass(style);
+        $el.addClass(style);
       }
     }
 
@@ -309,49 +290,49 @@
     },
     plugins: {
       styleselect: {
-      init: function (trumbowyg) {
-        trumbowyg.o.plugins.styleselect = $.extend(true, {},
-        defaultOptions,
-        trumbowyg.o.plugins.styleselect || {}
-        );
+        init: function (trumbowyg) {
+          trumbowyg.o.plugins.styleselect = $.extend(true, {},
+            defaultOptions,
+            trumbowyg.o.plugins.styleselect || {}
+          );
 
-        buildButtonIcon();
+          buildButtonIcon();
 
-        styleOptions = $.extend(true, styleOptions, trumbowyg.o.styleOptions);
+          styleOptions = $.extend(true, styleOptions, trumbowyg.o.styleOptions);
 
-        let styleOptionItems = Object.entries(styleOptions);
+          let styleOptionItems = Object.entries(styleOptions);
 
-        if (styleOptionItems.length > 0) {
-        let styleButtons = [];
+          if (styleOptionItems.length > 0) {
+            let styleButtons = [];
 
-        for (let [key, value] of styleOptionItems) {
-          trumbowyg.addBtnDef(key, {
-          title: value.label,
-          // ico: '',
-          hasIcon: false,
-          fn: function(k) {
-            onSelectStyle.call(trumbowyg, k);
+            for (let [key, value] of styleOptionItems) {
+              trumbowyg.addBtnDef(key, {
+                title: value.label,
+                // ico: '',
+                hasIcon: false,
+                fn: function(k) {
+                  onSelectStyle.call(trumbowyg, k);
+                }
+              });
+
+              styleButtons.push(key);
+            }
+
+            // Dropdown handle
+            trumbowyg.addBtnDef('styleselect', {
+              title: 'Style',
+              ico: 'styleselect',
+              hasIcon: true,
+              dropdown: styleButtons
+            });
           }
-          });
-
-          styleButtons.push(key);
-        }
-
-        // Dropdown handle
-        trumbowyg.addBtnDef('styleselect', {
-          title: 'Style',
-          ico: 'styleselect',
-          hasIcon: true,
-          dropdown: styleButtons
-        });
-        }
-      },
-      tagHandler: function (el, trumbowyg) {
-        // return (el.tagName == 'A') ? ['wplink'] : [];
-        return [];
-      },
-      destroy: function (trumbowyg) {
-      },
+        },
+        tagHandler: function (el, trumbowyg) {
+          // return (el.tagName == 'A') ? ['wplink'] : [];
+          return [];
+        },
+        destroy: function (trumbowyg) {
+        },
       }
     }
   });
