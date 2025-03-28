@@ -70,16 +70,16 @@ class acf_field_rich_editor extends acf_field {
 
   function get_styles() {
     $styles = [
-      'button_red' => [
-        'label' => 'Button Red',
-        'classname' => 'button_red',
-        'targets' => [ 'A' ],
-      ],
-      'headline_1' => [
-        'label' => 'Headline 1',
-        'classname' => 'headline_1',
-        'targets' => [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ],
-      ],
+      // 'button_red' => [
+      //   'label' => 'Button Red',
+      //   'classname' => 'button_red',
+      //   'targets' => [ 'A' ],
+      // ],
+      // 'headline_1' => [
+      //   'label' => 'Headline 1',
+      //   'classname' => 'headline_1',
+      //   'targets' => [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ],
+      // ],
     ];
 
     $styles = apply_filters( 'acf/fields/rich_editor/styles', $styles );
