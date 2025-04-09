@@ -5,6 +5,10 @@
 
 		type: 'rich_editor',
 
+    events: {
+      'duplicateField': 'onDuplicate'
+    },
+
     $input: function() {
       return this.$('textarea');
     },
@@ -13,35 +17,45 @@
       let $textarea = this.$input();
 
       let options = $.extend(true, {
-      btnsDef: {
-        formats: {
-        dropdown: ['p', 'h2', 'h3', 'h4', 'h5', 'h6'],
-        title: 'Formatting',
-        ico: 'p',
-        hasIcon: true,
+        btnsDef: {
+          formats: {
+          dropdown: ['p', 'h2', 'h3', 'h4', 'h5', 'h6'],
+          title: 'Formatting',
+          ico: 'p',
+          hasIcon: true,
+          },
         },
-      },
-      // btns: [
-      //   ['formats'],
-      //   ['strong', 'em', 'wplink', 'unorderedList', 'orderedList'],
-      //   ['viewHTML'],
-      // ],
-      // tagClasses: {
-      //   h1: 'headline-1',
-      //   h2: 'headline-2',
-      //   h3: 'headline-3',
-      //   h4: 'headline-4',
-      //   h5: 'headline-5',
-      //   h6: 'headline-6',
-      // },
-      autogrow: true,
-      removeformatPasted: true,
-      // resetCss: true,
-      tagsToRemove: ['script', 'link'],
+        // btns: [
+        //   ['formats'],
+        //   ['strong', 'em', 'wplink', 'unorderedList', 'orderedList'],
+        //   ['viewHTML'],
+        // ],
+        // tagClasses: {
+        //   h1: 'headline-1',
+        //   h2: 'headline-2',
+        //   h3: 'headline-3',
+        //   h4: 'headline-4',
+        //   h5: 'headline-5',
+        //   h6: 'headline-6',
+        // },
+        autogrow: true,
+        removeformatPasted: true,
+        // resetCss: true,
+        tagsToRemove: ['script', 'link'],
       }, $textarea.data('rich-editor-options'));
 
       this.$editor = $textarea.trumbowyg(options);
     },
+
+    onDuplicate: function(e, $el, $dupe) {
+      let $textarea = $dupe.find('textarea');
+      let $trumbowyg = $dupe.find('.trumbowyg');
+
+      $trumbowyg.before($textarea);
+      $trumbowyg.remove();
+
+      // $dupe.find('textarea').trumbowyg('destroy');
+    }
 
   });
 
@@ -215,7 +229,6 @@
           });
         },
         tagHandler: function (el, trumbowyg) {
-          console.log(el.tagName);
           return (el.tagName == 'A') ? ['wplink', 'wpcreatelink', 'wpremovelink'] : [];
         },
         destroy: function (trumbowyg) {

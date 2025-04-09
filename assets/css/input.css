@@ -19,6 +19,7 @@
 }
 
 .trumbowyg-box {
+  background: #fff;
   min-height: var(--acf-rich-editor-min-height, 140px) !important;
 }
 
