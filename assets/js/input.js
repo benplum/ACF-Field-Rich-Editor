@@ -1,12 +1,15 @@
-
 (function($) {
 
   var Field = acf.Field.extend({
 
-		type: 'rich_editor',
+    type: 'rich_editor',
+
+    actions: {
+      'show_field/type=rich_editor': 'onShowField',
+    },
 
     events: {
-      'duplicateField': 'onDuplicate'
+      'duplicateField': 'onDuplicate',
     },
 
     $input: function() {
@@ -45,6 +48,10 @@
       }, $textarea.data('rich-editor-options'));
 
       this.$editor = $textarea.trumbowyg(options);
+    },
+
+    onShowField: function() {
+      this.$editor.trumbowyg('enable');
     },
 
     onDuplicate: function(e, $el, $dupe) {
