@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class acf_field_rich_editor extends acf_field {
+  
+  var $settings;
 
   function __construct( $settings ) {
     $this->name = 'rich_editor';
@@ -26,7 +28,27 @@ class acf_field_rich_editor extends acf_field {
       // 'escaping_html' => true,
     );
 
+    $this->add_filters();
+
     parent::__construct();
+  }
+
+  // Duplicated from core WYSIWYG
+  function add_filters() {
+    $wp_filter_content_tags = function_exists( 'wp_filter_content_tags' ) ? 'wp_filter_content_tags' : 'wp_make_content_images_responsive';
+
+    add_filter( 'acf_the_content', 'capital_P_dangit', 11 );
+    add_filter( 'acf_the_content', 'wptexturize' );
+    add_filter( 'acf_the_content', 'convert_smilies', 20 );
+    add_filter( 'acf_the_content', 'wpautop' );
+    add_filter( 'acf_the_content', 'shortcode_unautop' );
+    add_filter( 'acf_the_content', $wp_filter_content_tags );
+    add_filter( 'acf_the_content', 'do_shortcode', 11 );
+
+    if ( isset( $GLOBALS['wp_embed'] ) ) {
+      add_filter( 'acf_the_content', array( $GLOBALS['wp_embed'], 'run_shortcode' ), 8 );
+      add_filter( 'acf_the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
+    }
   }
 
   function get_toolbars() {
@@ -115,7 +137,7 @@ class acf_field_rich_editor extends acf_field {
     ]);
   }
 
-  function render_field( $field  ) {
+  function render_field( $field ) {
     $toolbars = $this->get_toolbars();
     $styles = $this->get_styles();
 
@@ -139,6 +161,8 @@ class acf_field_rich_editor extends acf_field {
     if ( ! empty( $styles ) ) {
       $options['styleOptions'] = $styles;
     }
+
+    $options = apply_filters( 'acf/fields/rich_editor/options', $options, $field );
 
     $value = $field['value'];
 
@@ -178,6 +202,25 @@ class acf_field_rich_editor extends acf_field {
       wp_register_style( 'acf-rich-editor-theme', $theme_uri, [ 'acf-rich-editor' ], $version );
       wp_enqueue_style( 'acf-rich-editor-theme' );
     }
+  }
+
+  // Duplicated from core WYSIWYG
+  public function format_value( $value, $post_id, $field, $escape_html ) {
+    if ( empty( $value ) || ! is_string( $value ) ) {
+      return $value;
+    }
+
+    if ( $escape_html ) {
+      add_filter( 'acf_the_content', 'acf_esc_html', 1 );
+    }
+
+    $value = apply_filters( 'acf_the_content', $value );
+
+    if ( $escape_html ) {
+      remove_filter( 'acf_the_content', 'acf_esc_html', 1 );
+    }
+
+    return str_replace( ']]>', ']]&gt;', $value );
   }
 
 }
