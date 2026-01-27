@@ -164,7 +164,7 @@ class acf_field_rich_editor extends acf_field {
 
     $options = apply_filters( 'acf/fields/rich_editor/options', $options, $field );
 
-    $value = $field['value'];
+    $value = wpautop( $field['value'] );
 
     $html .= '<div class="acf_rich_editor">';
 
