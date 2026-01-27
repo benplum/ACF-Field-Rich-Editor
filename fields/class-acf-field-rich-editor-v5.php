@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class acf_field_rich_editor extends acf_field {
-  
+
   var $settings;
 
   function __construct( $settings ) {
@@ -51,7 +51,7 @@ class acf_field_rich_editor extends acf_field {
     }
   }
 
-  function get_toolbars() {
+  function get_toolbars( $field ) {
     $toolbars = [
       'full' => [
         'label' => 'Full',
@@ -85,12 +85,12 @@ class acf_field_rich_editor extends acf_field {
       ],
     ];
 
-    $toolbars = apply_filters( 'acf/fields/rich_editor/toolbars', $toolbars );
+    $toolbars = apply_filters( 'acf/fields/rich_editor/toolbars', $toolbars, $field );
 
     return $toolbars;
   }
 
-  function get_styles() {
+  function get_styles( $field ) {
     $styles = [
       // 'button_red' => [
       //   'label' => 'Button Red',
@@ -104,14 +104,14 @@ class acf_field_rich_editor extends acf_field {
       // ],
     ];
 
-    $styles = apply_filters( 'acf/fields/rich_editor/styles', $styles );
+    $styles = apply_filters( 'acf/fields/rich_editor/styles', $styles, $field );
 
     return $styles;
   }
 
   function render_field_presentation_settings( $field ) {
-    $toolbars = $this->get_toolbars();
-    $choices  = [];
+    $toolbars = $this->get_toolbars( $field );
+    $choices = [];
 
     if ( ! empty( $toolbars ) ) {
       foreach ( $toolbars as $k => $v ) {
@@ -138,8 +138,8 @@ class acf_field_rich_editor extends acf_field {
   }
 
   function render_field( $field ) {
-    $toolbars = $this->get_toolbars();
-    $styles = $this->get_styles();
+    $toolbars = $this->get_toolbars( $field );
+    $styles = $this->get_styles( $field );
 
     $html = '';
 

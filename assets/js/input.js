@@ -22,10 +22,10 @@
       let options = $.extend(true, {
         btnsDef: {
           formats: {
-          dropdown: ['p', 'h2', 'h3', 'h4', 'h5', 'h6'],
-          title: 'Formatting',
-          ico: 'p',
-          hasIcon: true,
+            dropdown: ['p', 'h2', 'h3', 'h4', 'h5', 'h6'],
+            title: 'Formatting',
+            ico: 'p',
+            hasIcon: true,
           },
         },
         // btns: [
@@ -147,7 +147,7 @@
     let target;
     let linkDefaultTarget = activeTrumbowyg.o.linkTargets[0];
 
-    while (['A', 'DIV'].indexOf(node.nodeName) < 0) {
+    while (['A' /*, 'DIV'*/].indexOf(node.nodeName) < 0) {
       node = node.parentNode;
     }
 
@@ -266,12 +266,8 @@
       return;
     }
 
-    while (['H1', 'H2', 'H3', 'H4', 'H5', 'H7', 'P', 'A', 'DIV'].indexOf(node.nodeName) < 0) {
+    while (activeStyle.targets.indexOf(node.nodeName) < 0) {
       node = node.parentNode;
-    }
-
-    if (activeStyle.targets.indexOf(node.nodeName) < 0) {
-      return;
     }
 
     if (node) {
@@ -327,7 +323,7 @@
 
             for (let [key, value] of styleOptionItems) {
               trumbowyg.addBtnDef(key, {
-                title: value.label,
+                title: value.label + ' (' + (value.targets.join(', ').toLowerCase()) + ')',
                 // ico: '',
                 hasIcon: false,
                 fn: function(k) {
@@ -348,7 +344,11 @@
           }
         },
         tagHandler: function (el, trumbowyg) {
-          // return (el.tagName == 'A') ? ['wplink'] : [];
+          // while (['H1', 'H2', 'H3', 'H4', 'H5', 'H7', 'P', 'A', 'DIV', 'UL', 'OL'].indexOf(el.nodeName) < 0) {
+          //   el = el.parentNode;
+          // }
+
+          // return (activeStyle.targets.indexOf(el.nodeName) >= 0) ? ['styleselect'] : [];
           return [];
         },
         destroy: function (trumbowyg) {
