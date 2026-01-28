@@ -147,7 +147,7 @@
     let target;
     let linkDefaultTarget = activeTrumbowyg.o.linkTargets[0];
 
-    while (['A' /*, 'DIV'*/].indexOf(node.nodeName) < 0) {
+    while (['A', 'DIV'].indexOf(node.nodeName) < 0) {
       node = node.parentNode;
     }
 
