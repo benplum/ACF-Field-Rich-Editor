@@ -45,6 +45,7 @@
         removeformatPasted: true,
         // resetCss: true,
         tagsToRemove: ['script', 'link'],
+        linkTargets: [''],
       }, $textarea.data('rich-editor-options'));
 
       this.$editor = $textarea.trumbowyg(options);
