@@ -45,7 +45,7 @@
         removeformatPasted: true,
         // resetCss: true,
         tagsToRemove: ['script', 'link'],
-        linkTargets: [''],
+        linkTargets: ['', '_blank'],
       }, $textarea.data('rich-editor-options'));
 
       this.$editor = $textarea.trumbowyg(options);
@@ -122,7 +122,7 @@
     activeTrumbowyg.range.deleteContents();
     activeTrumbowyg.range.insertNode(link[0]);
     activeTrumbowyg.syncCode();
-    activeTrumbowyg.$c.trigger('tbwchange');
+    activeTrumbowyg.$c.trigger('tbwchange').trigger('change');
 
     activeTrumbowyg = null;
     activeValue = null;
@@ -195,6 +195,8 @@
 
       $a.replaceWith(text);
     }
+    
+    activeTrumbowyg.$c.trigger('tbwchange').trigger('change');
   }
 
   $.extend(true, $.trumbowyg, {
