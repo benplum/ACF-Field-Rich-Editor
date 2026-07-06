@@ -134,6 +134,12 @@
   function onCreateLink() {
     activeTrumbowyg = this;
 
+    if (typeof wpLink === 'undefined' || typeof wpLink.open !== 'function') {
+      return;
+    }
+
+    activeTrumbowyg.$ed.trigger('focus');
+
     $(document).on('wplink-open', onOpen);
     $(document).on('wplink-close', onClose);
 
@@ -141,14 +147,14 @@
     $('body').append($textarea);
 
     let documentSelection = activeTrumbowyg.doc.getSelection();
-    let selectedRange = documentSelection.getRangeAt(0);
-    let node = documentSelection.focusNode;
-    let text = new XMLSerializer().serializeToString(selectedRange.cloneContents()) || selectedRange + '';
+    let selectedRange = documentSelection && documentSelection.rangeCount ? documentSelection.getRangeAt(0) : null;
+    let node = documentSelection ? documentSelection.focusNode : null;
+    let text = selectedRange ? (new XMLSerializer().serializeToString(selectedRange.cloneContents()) || selectedRange + '') : '';
     let url;
     let target;
     let linkDefaultTarget = activeTrumbowyg.o.linkTargets[0];
 
-    while (['A', 'DIV'].indexOf(node.nodeName) < 0) {
+    while (node && ['A', 'DIV'].indexOf(node.nodeName) < 0) {
       node = node.parentNode;
     }
 
@@ -164,8 +170,10 @@
 
       let range = activeTrumbowyg.doc.createRange();
       range.selectNode(node);
-      documentSelection.removeAllRanges();
-      documentSelection.addRange(range);
+      if (documentSelection) {
+        documentSelection.removeAllRanges();
+        documentSelection.addRange(range);
+      }
     }
 
     activeTrumbowyg.saveRange();
@@ -183,9 +191,9 @@
     activeTrumbowyg = this;
 
     let documentSelection = activeTrumbowyg.doc.getSelection();
-    let node = documentSelection.focusNode;
+    let node = documentSelection ? documentSelection.focusNode : null;
 
-    while (['A', 'DIV'].indexOf(node.nodeName) < 0) {
+    while (node && ['A', 'DIV'].indexOf(node.nodeName) < 0) {
       node = node.parentNode;
     }
 
@@ -195,7 +203,7 @@
 
       $a.replaceWith(text);
     }
-    
+
     activeTrumbowyg.$c.trigger('tbwchange').trigger('change');
   }
 

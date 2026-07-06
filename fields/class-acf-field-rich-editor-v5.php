@@ -148,7 +148,7 @@ class acf_field_rich_editor extends acf_field {
 
     foreach ( $check as $c ) {
       if ( ! empty( $field[ $c ] ) ) {
-        $atttributes[ $c ] = $field[ $c ];
+        $attributes[ $c ] = $field[ $c ];
       }
     }
 
@@ -168,7 +168,7 @@ class acf_field_rich_editor extends acf_field {
 
     $html .= '<div class="acf_rich_editor">';
 
-    $html .= '<textarea ' . acf_esc_attr( $atttributes ) . ' data-rich-editor-options="' . htmlentities( json_encode( $options ) ) . '">';
+    $html .= '<textarea ' . acf_esc_attr( $attributes ) . ' data-rich-editor-options="' . htmlentities( json_encode( $options ) ) . '">';
     $html .= $value;
     $html .= '</textarea>';
 
@@ -180,6 +180,11 @@ class acf_field_rich_editor extends acf_field {
   function input_admin_enqueue_scripts() {
     $url = $this->settings['url'];
     $version = $this->settings['version'];
+
+    // Ensure wpLink scripts/dialog markup are available even without a core wp_editor() instance.
+    wp_enqueue_editor();
+    wp_enqueue_script( 'wplink' );
+    wp_enqueue_style( 'editor-buttons' );
 
     wp_register_script( 'acf-rich-lib', $url . 'assets/trumbowyg/trumbowyg.min.js', [ 'acf-input' ], $version );
     wp_enqueue_script( 'acf-rich-lib' );
